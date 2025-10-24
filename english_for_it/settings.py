@@ -16,7 +16,7 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-change-this-in-production!')
+SECRET_KEY ='django-insecure-change-this-in-production!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
@@ -42,12 +42,23 @@ DJANGO_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.humanize',
+    # 'djmoney',
 ]
-
+# Money settings
+CURRENCIES = ('USD', 'EUR')
+CURRENCY_CHOICES = [('USD', 'USD $'), ('EUR', 'EUR €')]
 # Third party apps
 THIRD_PARTY_APPS = [
-    # Admin UI
-    'jazzmin',  # Must be before admin
+    # Admin UI (JAZZMIN 'INSTALLED_APPS' ning boshiga ko'chirildi)
+    
+    # Security & Monitoring (Bir joyga to'plandi)
+    'corsheaders',
+    'django_ratelimit',
+    'axes',
+    'csp',             # Takrorlanish olib tashlandi
+   # 'django_csprest_framework', # O'rnatilganligini tekshiring!
+    'silk',                   # API profiling (dev only)
+    'debug_toolbar',          # Dev only
     
     # API & Authentication
     'rest_framework',
@@ -75,14 +86,6 @@ THIRD_PARTY_APPS = [
     'channels',
     'channels_redis',
     
-    # Security & Monitoring
-    'corsheaders',
-    'django_ratelimit',
-    'axes',
-    'silk',  # API profiling (dev only)
-    'debug_toolbar',  # Dev only
-    'django_csp',
-    
     # Storage & Files
     'storages',
     'imagekit',
@@ -95,7 +98,6 @@ THIRD_PARTY_APPS = [
     'djmoney',
     'django_redis',
 ]
-
 # Local apps
 LOCAL_APPS = [
     'accounts.apps.AccountsConfig',
@@ -115,24 +117,29 @@ INSTALLED_APPS = ['jazzmin'] + DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 MIDDLEWARE = [
     # Security
     'django.middleware.security.SecurityMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Static files
-    
+    'csp.middleware.CSPMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
     # Django defaults
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'allauth.account.middleware.AccountMiddleware',  # REQUIRED FOR ALLAUTH
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     
     # Third party
-    'axes.middleware.AxesMiddleware',  # Brute force protection
+    'axes.middleware.AxesMiddleware',
     'django_ratelimit.middleware.RatelimitMiddleware',
     'djangorestframework_camel_case.middleware.CamelCaseMiddleWare',
+    # Removed duplicate CSPMiddleware
 ]
-
+# Instead of CSP_XXX = ...
+CSP_DEFAULT_SRC = ("'self'",)
+CSP_SCRIPT_SRC = ("'self'", "'unsafe-inline'", 'https://cdn.jsdelivr.net')
+# ... etc
 # Development-only middleware
 if DEBUG:
     MIDDLEWARE += [

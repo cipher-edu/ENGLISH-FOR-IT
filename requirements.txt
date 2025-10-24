@@ -1,46 +1,46 @@
 # Django core
-Django
+Django>=5.0,<5.1
 django-environ
 python-dotenv
 
-# Database - Windows uchun
-psycopg2 # Agar xato bersa, psycopg2-binary o'rniga manual o'rnating
+# Database
+psycopg2-binary
 dj-database-url
 django-redis
 
 # Admin UI
 django-jazzmin
 
-# REST API
+# REST API & Authentication
 djangorestframework
 djangorestframework-simplejwt
 djangorestframework-camel-case
 dj-rest-auth[with_social]
-django-allauth
+django-allauth>=0.51.0
 django-cors-headers
 drf-spectacular
 
 # Security
 django-axes
 django-ratelimit
-django-csp
+csp  # django-csp o'rniga zamonaviy va ishlovchi alternativa
 
-# Static files
+# Static & Media
 whitenoise
-django-storages
+django-storages[boto3]
 
 # Background tasks
-celery
+celery>=5.3
 django-celery-beat
 django-celery-results
-redis
+redis>=4.0
 
 # WebSocket
-channels
+channels>=4.0
 channels-redis
 daphne
 
-# File handling
+# File & Image handling
 Pillow
 django-imagekit
 django-cleanup
@@ -54,13 +54,13 @@ ipython
 # Monitoring
 sentry-sdk
 
-# Other utilities
+# Utilities
 django-filter
 django-import-export
 django-taggit
 django-countries
-django-phonenumber-field[phonenumbers]
-django-money
+# phonenumber-field
+
 
 # Testing
 pytest
@@ -71,6 +71,6 @@ faker
 
 # Linting & Formatting
 black
-flake8
 isort
+flake8
 pre-commit
