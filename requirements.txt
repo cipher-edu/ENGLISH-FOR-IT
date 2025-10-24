@@ -1,0 +1,76 @@
+# Django core
+Django
+django-environ
+python-dotenv
+
+# Database - Windows uchun
+psycopg2 # Agar xato bersa, psycopg2-binary o'rniga manual o'rnating
+dj-database-url
+django-redis
+
+# Admin UI
+django-jazzmin
+
+# REST API
+djangorestframework
+djangorestframework-simplejwt
+djangorestframework-camel-case
+dj-rest-auth[with_social]
+django-allauth
+django-cors-headers
+drf-spectacular
+
+# Security
+django-axes
+django-ratelimit
+django-csp
+
+# Static files
+whitenoise
+django-storages
+
+# Background tasks
+celery
+django-celery-beat
+django-celery-results
+redis
+
+# WebSocket
+channels
+channels-redis
+daphne
+
+# File handling
+Pillow
+django-imagekit
+django-cleanup
+
+# Development tools
+django-debug-toolbar
+django-extensions
+django-silk
+ipython
+
+# Monitoring
+sentry-sdk
+
+# Other utilities
+django-filter
+django-import-export
+django-taggit
+django-countries
+django-phonenumber-field[phonenumbers]
+django-money
+
+# Testing
+pytest
+pytest-django
+pytest-cov
+factory-boy
+faker
+
+# Linting & Formatting
+black
+flake8
+isort
+pre-commit
