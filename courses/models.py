@@ -33,7 +33,7 @@ class Course(models.Model):
             ('interview', 'Job Interview Prep'),
         ]
     )
-    tags = ArrayField(models.CharField(max_length=50), blank=True, default=list)
+    tags = models.JSONField(blank=True, default=list)
     
     # Media
     thumbnail = models.ImageField(upload_to='courses/thumbnails/')

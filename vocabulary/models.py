@@ -60,7 +60,7 @@ class Word(models.Model):
     # Categorization
     category = models.ForeignKey(WordCategory, on_delete=models.SET_NULL, null=True)
     subcategory = models.CharField(max_length=50, blank=True)
-    tags = ArrayField(models.CharField(max_length=30), blank=True, default=list)
+    tags = models.JSONField(blank=True, default=list)
     difficulty = models.CharField(max_length=10, choices=DIFFICULTY_LEVELS, default='medium')
     frequency_rank = models.IntegerField(null=True, blank=True)  # How common the word is
     
@@ -214,7 +214,7 @@ class WordSet(models.Model):
     lesson = models.ForeignKey('courses.Lesson', null=True, blank=True, on_delete=models.SET_NULL)
     
     # Metadata
-    tags = ArrayField(models.CharField(max_length=30), blank=True, default=list)
+    tags = models.JSONField(blank=True, default=list)
     difficulty = models.CharField(max_length=10, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

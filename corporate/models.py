@@ -24,7 +24,7 @@ class Company(models.Model):
     website = models.URLField(blank=True)
     
     # Branding
-    logo = models.ImageField(upload_to='companies/logos/', null=True)
+    logo = models.ImageField(upload_to='companies/logos/', null=True, blank=True)
     primary_color = models.CharField(max_length=7, default='#2196F3')
     
     # Subscription
@@ -51,21 +51,24 @@ class Company(models.Model):
     max_users = models.IntegerField(default=10)
     subscription_ends = models.DateTimeField(null=True, blank=True)
     
-    # Admin users
+    # Admin users - FIXED
     admins = models.ManyToManyField(
         'accounts.User', 
         through='CompanyAdmin',
+        through_fields=('company', 'user'),  # Aniq ko'rsatish
         related_name='administered_companies'
     )
     
     # Settings
     enforce_daily_practice = models.BooleanField(default=False)
     minimum_daily_minutes = models.IntegerField(default=15)
-    allowed_domains = ArrayField(
-        models.CharField(max_length=100), 
-        blank=True, 
-        default=list
-    )  # Email domains for auto-approval
+    
+    # For PostgreSQL - ArrayField o'rniga JSONField
+    allowed_domains = models.JSONField(
+        default=list,
+        blank=True,
+        help_text="Email domains for auto-approval"
+    )
     
     # Metadata
     created_at = models.DateTimeField(auto_now_add=True)
@@ -232,8 +235,8 @@ class LearningPath(models.Model):
     # Content
     courses = models.ManyToManyField('courses.Course', through='LearningPathItem')
     
-    # Target audience
-    target_roles = ArrayField(models.CharField(max_length=50), default=list)
+    # Target audience - JSONField instead of ArrayField
+    target_roles = models.JSONField(default=list)
     target_level = models.CharField(max_length=2)
     
     # Settings
@@ -304,7 +307,7 @@ class CompanyInvoice(models.Model):
     payment_date = models.DateTimeField(null=True, blank=True)
     
     # Files
-    pdf_file = models.FileField(upload_to='invoices/', null=True)
+    pdf_file = models.FileField(upload_to='invoices/', null=True, blank=True)
     
     # Metadata
     created_at = models.DateTimeField(auto_now_add=True)

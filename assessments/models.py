@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.postgres.fields import ArrayField
+
 from django.core.validators import MinValueValidator, MaxValueValidator
 import uuid
 import hashlib
@@ -107,7 +107,7 @@ class Question(models.Model):
     )
     
     # Answer options (for applicable types)
-    options = models.JSONField(null=True, blank=True)
+    options = models.JSONField(default=list, blank=True)
     correct_answer = models.JSONField()  # Can be string, list, or complex object
     
     # Scoring
@@ -118,7 +118,7 @@ class Question(models.Model):
     difficulty = models.IntegerField(
         validators=[MinValueValidator(1), MaxValueValidator(5)]
     )
-    tags = ArrayField(models.CharField(max_length=30), blank=True, default=list)
+    tags = models.JSONField(blank=True, default=list) # ArrayField o'rniga JSONField
     explanation = models.TextField(blank=True)  # Explanation of correct answer
     
     # Usage tracking

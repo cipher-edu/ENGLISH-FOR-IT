@@ -39,7 +39,7 @@ class SpeakingScenario(models.Model):
     evaluation_rubric = models.JSONField()  # Criteria for scoring
     
     # Metadata
-    tags = ArrayField(models.CharField(max_length=30), blank=True, default=list)
+    tags = models.JSONField(blank=True, default=list)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
